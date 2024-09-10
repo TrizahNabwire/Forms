@@ -1,0 +1,2004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+    <link rel="stylesheet" href="formCSS.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" style="font-family: Century">
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row justify-content-center align-items-center text-light" style="background-color: #2164A6; height:50px">
+                        <div class="col-md-4 text-center" id="form-title" style="font-size:18px">Untitled Form</div>
+                    </div>
+                </div>
+                <input type="file" id="fileInput" style="display: none;" accept="image/*">
+            </section>
+            <div class="container" style="padding: 10px; margin-top: none; margin-bottom: 10px;">
+                <div class="row justify-content-between">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5>Questions</h5>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="#">
+                                    <h5>Responses</h5></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row justify-content-end">
+                            <div class="col-md-3">
+                             <button class="btn btn-success" onclick="previewForm()"><i class="fa-regular fa-eye mr-2"></i>Preview</button>
+
+                            </div>
+                            <div class="btn-group col-md-3">
+                                <button type="button" class="btn btn-sm text-light dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background-color: #2164A6" id="mainDropdown">
+                                    Publish
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="mainDropdown">
+                                    <li class="dropdown-submenu">
+                                        <button class="dropdown-item" type="button" onclick="toggleNestedDropdown(event)">Department</button>
+                                        <ul class="nested-dropdown dropdown-menu" style="display: none;">
+                                            <li><a class="dropdown-item" href="#" onclick="showSendModal()">All</a></li>
+                                            <li><a class="dropdown-item" href="#">Customer Care</a></li>
+                                            <li><a class="dropdown-item" href="#">IT</a></li>
+                                            <li><a class="dropdown-item" href="#">Media</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><button class="dropdown-item" type="button" onclick="showModal()">Others</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container shadow section-container section1" id="section1">
+                <div class="row">
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="col-md-6">
+                            <img src="" class="img-fluid" alt="Logo">Forms Logo
+                        </div>
+                        <div class="col-md-6 ms-3">
+                            <p><i class="fa-solid fa-phone" style="color: #1A9970; margin-right: 8px;"></i> +254 701 402 513</p>
+                            <p><i class="fa-solid fa-location-dot me-2" style="color: #1A9970; margin-right: 8px;"></i> Address</p>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+            <div class="container shadow section-container section2" id="section2">
+                <div class="top-blue"></div>
+                <div class="header">
+                    <input type="text" placeholder="Form Title" class="form-control" id="form-input" oninput="updateFormTitle()">
+                </div>
+                <hr class="divider">
+                <div class="content" style="width:100%">
+                    <textarea placeholder="Form Description" class="form-control form-textarea" rows="2"></textarea>
+                </div>
+            </div><br>
+            <div id="new-sections"></div>
+            <div class="container section-container section3" id="section3">
+                <button type="button" class="btn btn-outline btn-custom" data-bs-toggle="modal" data-bs-target="#questionTypeModal" style="color:white"> 
+                    <i class="fa-solid fa-plus mr-2"></i>
+                    Add Questions
+                </button>
+            </div><br>
+        </div>
+    </div>
+    <div class="modal fade" id="questionTypeModal" tabindex="-1" aria-labelledby="questionTypeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="questionTypeModalLabel">Question Types</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5 style="color:#2164A6">Input Fields</h5>
+                                <p id="phone-number-option"><i class="fas fa-phone"></i> Phone Number</p>
+                                <p id="long-answer-option"><i class="fas fa-align-left"></i> Long Answer</p>
+                                <p id="short-answer-option"><i class="fas fa-minus"></i> Short Answer</p>
+                                <p id="email-option"><i class="fas fa-envelope"></i> Email</p>
+                                <p id="link-option"><i class="fas fa-link"></i> Link</p>
+                                <p id="numerical-option"><i class="fa-solid fa-list-ol"></i>Numerical</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 style="color:#2164A6">Choice Fields</h5>
+                                <p id="single-choice-option"><i class="fas fa-dot-circle"></i> Single Choice</p>
+                                <p id="check-box-option"><i class="fas fa-check-square"></i> Multiple Choice</p>
+                                <p id="single-grid-option"><i class="fas fa-th-list"></i> Single-choice grid</p>
+                                <p id="check-grid-option"><i class="fas fa-th"></i> Multiple Choice Grid</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 style="color:#2164A6">Navigation</h5>
+                                <p id="section-option"><i class="fas fa-layer-group"></i> Section</p>
+                                <p id="page-break-option"><i class="fas fa-file-alt"></i> Page Break</p>
+                                
+                            </div>
+                        </div>
+                        <hr class="divider">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5 style="color:#2164A6">Upload</h5>
+                                <p id="upload-file-option"><i class="fas fa-file-upload"></i> Upload file</p>
+                                <p id="picture-option"><i class="fas fa-camera"></i> Take a picture</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 style="color:#2164A6">Date & Time</h5>
+                                <p id="date-option"><i class="fas fa-calendar-alt"></i> Pick a Date</p>
+                                <p id="time-option"><i class="fas fa-clock"></i> Pick a Time</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 style="color:#2164A6">Rating</h5>
+                                <p id="linear-scale-option"><i class="fas fa-grip-lines"></i> Linear Scale</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sendModalLabel">Send Options</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    All employees will receive the form in their email.
+                    <div class="d-flex justify-content-between mt-3">
+                        <button class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-outline-success" id="scheduleSendButton" data-toggle="modal" data-target="#scheduleModal">Schedule Send</button>
+                        <button class="btn btn-success">Send</button>
+                    </div>
+                    <div class="mt-3" id="datetimePickerContainer" style="display: none;">
+                        <label for="datetimePicker" class="form-label">Select Date & Time:</label>
+                        <input type="text" id="datetimePicker" class="form-control datepicker" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="sendFormModal" tabindex="-1" aria-labelledby="sendFormModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sendFormModalLabel">Send Form</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Link</strong></p>
+                    <p id="formLink">https://trizahnabwire.com/forms/d/1C</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div style="color: #1A9970">
+                            <i class="fab fa-facebook fa-lg me-3" onclick="shareToFacebook()"></i>&nbsp;&nbsp;
+                            <i class="fab fa-whatsapp fa-lg" onclick="shareToWhatsApp()"></i>
+                        </div>
+                        <button class="btn btn-link text-decoration-none" onclick="copyToClipboard()"><i class="fas fa-link"></i> Copy link</button>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-text-success me-3" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-success" onclick="generateNewLink()">Generate Link</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scheduleModalLabel">Schedule</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="scheduleForm">
+                        <div class="mb-3">
+                            <label for="dateTimePaid" class="form-label">Date and Time Paid</label>
+                            <input type="datetime-local" class="form-control" id="dateTimePaid">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
+    <script>
+        function showModal() {
+            $('#sendFormModal').modal('show');
+        }
+
+        function generateNewLink() {
+            const newLink = 'https://trizahnabwire.com/forms/d/' + Math.random().toString(36).substring(2, 15);
+            document.getElementById('formLink').textContent = newLink;
+        }
+
+        function copyToClipboard() {
+            const link = document.getElementById('formLink').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Link copied to clipboard');
+            });
+        }
+
+        function shareToFacebook() {
+            const link = document.getElementById('formLink').textContent;
+            const title = 'Form Title';
+            const description = 'Form Description';
+            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}&t=${encodeURIComponent(title)}%20${encodeURIComponent(description)}`;
+            window.open(url, '_blank');
+        }
+
+        function shareToWhatsApp() {
+            const link = document.getElementById('formLink').textContent;
+            const title = 'Form Title';
+            const description = 'Form Description';
+            const url = `https://wa.me/?text=${encodeURIComponent(title)}%20${encodeURIComponent(description)}%20${encodeURIComponent(link)}`;
+            window.open(url, '_blank');
+        }
+
+        function showSendModal() {
+            var myModal = new bootstrap.Modal(document.getElementById('sendModal'));
+            myModal.show();
+        }
+
+        function toggleNestedDropdown(event) {
+            event.stopPropagation();
+            var nestedDropdown = event.target.nextElementSibling;
+            nestedDropdown.style.display = nestedDropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        document.addEventListener('click', function(event) {
+            var openDropdowns = document.querySelectorAll('.nested-dropdown');
+            openDropdowns.forEach(function(dropdown) {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
+
+        document.getElementById('scheduleForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            window.location.href = "#";
+        });
+
+        function addSection(sectionType) {
+            const newSectionsContainer = document.getElementById('new-sections');
+            let sectionHTML = '';
+            const uniqueId = Date.now(); 
+
+            switch (sectionType) {
+                case 'phone':
+                    sectionHTML = `
+                        <div class="container shadow section-container section4" id="${uniqueId}" style="margin-top:20px">
+                            <div class="question-header" style="width:100%">
+                                <input type="text" placeholder="Type a question" class="form-control">
+                            </div>
+                            <div class="question-body">
+                                <input type="text" placeholder="Type a description" class="form-control"><br>
+                                <div id="QuizInput">
+                     
+                <input type="tel" placeholder="Enter your Phone Number" class="form-control" id="phone-input">
+           
+                                </div>
+                                </div>
+                                <br>
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <p style="margin-right:10px">Question Type</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                                <i class="fa-solid fa-phone" style="margin-right:10px"></i>Phone Number
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-icons">
+                                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                                <i class="fas fa-image" id="upload-icon"></i>
+                                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-footer">
+                                                <div class="required-toggle">
+                                                    <span>Required</span>
+                                                    <label class="form-check">
+                                                        <input type="checkbox" checked>
+                                                        <span class="form-check-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    `;
+                    break;
+               case 'long-answer':
+    sectionHTML = `
+        <div class="container shadow section-container section5" id="${uniqueId}" style="margin-top:20px">
+            <div class="question-header" style="width:100%">
+                <input type="text" placeholder="Type a question" class="form-control">
+            </div>
+            <div class="question-body">
+                <input type="text" placeholder="Type a description" class="form-control">
+                <div id="QuizInput">
+                    <textarea class="form-control" placeholder="Long-answer text" rows="4"></textarea>
+                </div>
+                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                    <div class="col-auto">
+                        <div class="p-3">
+                            <p style="margin-right:10px">Question Type</p>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="p-3">
+                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                <i class="fas fa-align-left" style="margin-right:10px"></i>Long Text
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="p-3">
+                            <div class="question-icons">
+                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="p-3">
+                            <div class="question-footer">
+                                <div class="required-toggle">
+                                    <span>Required</span>
+                                    <label class="form-check">
+                                        <input type="checkbox" checked>
+                                        <span class="form-check-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+    `;
+    break;
+
+                case 'short-answer':
+                    sectionHTML = `
+                        <div class="container shadow section-container section6" id="${uniqueId}" style="margin-top:20px">
+                            <div class="question-header" style="width:100%">
+                                <input type="text" placeholder="Type a question" class="form-control">
+                            </div>
+                            <div class="question-body">
+                                <input type="text" placeholder="Type a description" class="form-control">
+                                <div id="QuizInput">
+                                <textarea class="form-control" placeholder="short-answer text" rows="4"></textarea></div>
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <p style="margin-right:10px">Question Type</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                                <i class="fas fa-minus" style="margin-right:10px"></i>Short Text
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-icons">
+                                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                                <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-footer">
+                                                <div class="required-toggle">
+                                                    <span>Required</span>
+                                                    <label class="form-check">
+                                                        <input type="checkbox" checked>
+                                                        <span class="form-check-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    `;
+                    break;
+                case 'email':
+                    sectionHTML = `
+                        <div class="container shadow section-container section7" id="${uniqueId}" style="margin-top:20px">
+                            <div class="question-header" style="width:100%">
+                                <input type="text" placeholder="Type a question" class="form-control">
+                            </div>
+                            <div class="question-body">
+                            <input type="text" placeholder="Type a description" class="form-control">
+                           <div id="QuizInput">
+                                <input type="email" placeholder="Enter your email" class="form-control"><br></div>
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <p style="margin-right:10px">Question Type</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                                <i class="fas fa-envelope" style="margin-right:10px"></i>Email
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-icons">
+                                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                                <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-footer">
+                                                <div class="required-toggle">
+                                                    <span>Required</span>
+                                                    <label class="form-check">
+                                                        <input type="checkbox" checked>
+                                                        <span class="form-check-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    `;
+                    break;
+                     
+                case 'link':
+                    sectionHTML = `
+                        <div class="container shadow section-container section8" id="${uniqueId}" style="margin-top:20px">
+                            <div class="question-header" style="width:100%">
+                                <input type="text" placeholder="Type a question" class="form-control">
+                            </div>
+                            <div class="question-body">
+                                <input type="text" placeholder="Type a description" class="form-control">
+                            <div id="QuizInput">
+                                <input type="url" placeholder="Enter a link" class="form-control"><br></div>
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <p style="margin-right:10px">Question Type</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                                <i class="fas fa-link" style="margin-right:10px"></i>Link
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-icons">
+                                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                                <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-footer">
+                                                <div class="required-toggle">
+                                                    <span>Required</span>
+                                                    <label class="form-check">
+                                                        <input type="checkbox" checked>
+                                                        <span class="form-check-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    `;
+                    break;
+              case 'single-choice':
+    sectionHTML = `
+        <div class="container shadow section-container section9" id="${uniqueId}" style="margin-top:20px">
+            <div class="question-header" style="width:100%">
+                <input type="text" placeholder="Type a question" class="form-control question-title">
+            </div>
+         
+                <div class="question-body">
+                    <input type="text" placeholder="Type a description" class="form-control question-description"><br>
+                <div id="QuizInput">
+                    <div class="question-options">
+                        <div class="question-option">
+                            <input class="form-check-input" type="radio" name="optionGroup_${uniqueId}" id="option1_${uniqueId}">
+                            <input type="text" placeholder="Option 1" class="form-control option-input">
+                            <i class="fa-solid fa-trash deleteIcon" onclick="deleteOtherOption(this)"></i>
+                        </div>
+                        <div class="question-option">
+                            <input class="form-check-input" type="radio" name="optionGroup_${uniqueId}" id="option2_${uniqueId}">
+                            <input type="text" placeholder="Option 2" class="form-control option-input">
+                            <i class="fa-solid fa-trash deleteIcon" onclick="deleteOtherOption(this)"></i>
+                        </div>
+                        <div class="question-option">
+                            <input class="form-check-input" type="radio" name="optionGroup_${uniqueId}" id="option3_${uniqueId}">
+                            <input type="text" placeholder="Option 3" class="form-control option-input">
+                            <i class="fa-solid fa-trash deleteIcon" onclick="deleteOtherOption(this)"></i>
+                        </div>
+                        <div class="question-option">
+                            <input class="form-check-input" type="radio" name="optionGroup_${uniqueId}" id="option4_${uniqueId}">
+                            <input type="text" placeholder="Option 4" class="form-control option-input">
+                            <i class="fa-solid fa-trash deleteIcon" onclick="deleteOtherOption(this)"></i>
+                        </div>
+                        <div class="question-option add-option">
+                            <input class="form-check-input" type="radio" disabled>
+                            <span class="add-option" onclick="addOtherOption(this)">Add Other Option</span>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary mt-3" onclick="previewChoice('${uniqueId}', 'radio')">Preview</button>
+                <div id="preview_${uniqueId}" class="preview mt-3" style="display:none;">
+                    <h5>Preview</h5>
+                    <p class="preview-question"></p>
+                    <div class="preview-options"></div>
+                </div>
+                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <p style="margin-right:10px">Question Type</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                                <i class="fas fa-link" style="margin-right:10px"></i>Single Choice
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-icons">
+                                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                                <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-footer">
+                                                <div class="required-toggle">
+                                                    <span>Required</span>
+                                                    <label class="form-check">
+                                                        <input type="checkbox" checked>
+                                                        <span class="form-check-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+    `;
+    break;
+
+case 'check-box':
+    sectionHTML = `
+        <div class="container shadow section-container section10" id="${uniqueId}" style="margin-top:20px">
+            <div class="question-header" style="width:100%">
+                <input type="text" placeholder="Type a question" class="form-control question-title">
+            </div>
+             <div class="question-body">
+                    <input type="text" placeholder="Type a description" class="form-control question-description"><br>
+                <div id="QuizInput">
+                    <div class="question-options">
+                        <div class="question-option">
+                            <input class="form-check-input" type="checkbox" name="optionGroup_${uniqueId}" id="option1_${uniqueId}">
+                            <input type="text" placeholder="Option 1" class="form-control option-input">
+                            <i class="fa-solid fa-trash deleteIcon" onclick="deleteOtherOption(this)"></i>
+                        </div>
+                        <div class="question-option">
+                            <input class="form-check-input" type="checkbox" name="optionGroup_${uniqueId}" id="option2_${uniqueId}">
+                            <input type="text" placeholder="Option 2" class="form-control option-input">
+                            <i class="fa-solid fa-trash deleteIcon" onclick="deleteOtherOption(this)"></i>
+                        </div>
+                        <div class="question-option">
+                            <input class="form-check-input" type="checkbox" name="optionGroup_${uniqueId}" id="option3_${uniqueId}">
+                            <input type="text" placeholder="Option 3" class="form-control option-input">
+                            <i class="fa-solid fa-trash deleteIcon" onclick="deleteOtherOption(this)"></i>
+                        </div>
+                        <div class="question-option">
+                            <input class="form-check-input" type="checkbox" name="optionGroup_${uniqueId}" id="option4_${uniqueId}">
+                            <input type="text" placeholder="Option 4" class="form-control option-input">
+                            <i class="fa-solid fa-trash deleteIcon" onclick="deleteOtherOption(this)"></i>
+                        </div>
+                        <div class="question-option add-option">
+                            <input class="form-check-input" type="checkbox" disabled>
+                            <span class="add-option" onclick="addOtherOption(this)">Add Other Option</span>
+                        </div>
+                    </div>
+                </div>
+            <button type="button" class="btn btn-primary mt-3" onclick="previewChoice('${uniqueId}', 'checkbox')">Preview</button>
+            <div id="preview_${uniqueId}" class="preview mt-3" style="display:none;">
+                <h5>Preview</h5>
+                <p class="preview-question"></p>
+                <div class="preview-options"></div>
+            </div>
+            
+            <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <p style="margin-right:10px">Question Type</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                                <i class="fas fa-link" style="margin-right:10px"></i>Multiple Choice
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-icons">
+                                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                                <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-footer">
+                                                <div class="required-toggle">
+                                                    <span>Required</span>
+                                                    <label class="form-check">
+                                                        <input type="checkbox" checked>
+                                                        <span class="form-check-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+    `;
+    break;
+
+                case 'single-choice-grid':
+    sectionHTML = `
+        <div class="container shadow section-container section11" id="${uniqueId}" style="margin-top:20px">
+            <div class="question-header" style="width:100%">
+                <input type="text" placeholder="Type a question" class="form-control">
+            </div>
+            <div class="question-body">
+                <input type="text" placeholder="Type a description" class="form-control">
+                <div id="QuizInput">
+                    <form>
+                        <table class="survey-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th contenteditable="true">Option 1 <i class="fas fa-times delete-icon" onclick="deleteOption(this, '${uniqueId}')"></i></th>
+                                    <th contenteditable="true">Option 2 <i class="fas fa-times delete-icon" onclick="deleteOption(this, '${uniqueId}')"></i></th>
+                                    <th contenteditable="true">Option 3 <i class="fas fa-times delete-icon" onclick="deleteOption(this, '${uniqueId}')"></i></th>
+                                    <th contenteditable="true">Option 4 <i class="fas fa-times delete-icon" onclick="deleteOption(this, '${uniqueId}')"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody id="single-choice-grid-body${uniqueId}">
+                                <tr>
+                                    <td contenteditable="true">Statement 1 <i class="fas fa-times delete-icon" onclick="deleteStatement(this, 'single-choice-grid-body${uniqueId}', 'single')"></i></td>
+                                    <td><input type="radio" name="Statement 1" value="Option 1"></td>
+                                    <td><input type="radio" name="Statement 1" value="Option 2"></td>
+                                    <td><input type="radio" name="Statement 1" value="Option 3"></td>
+                                    <td><input type="radio" name="Statement 1" value="Option 4"></td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true">Statement 2 <i class="fas fa-times delete-icon" onclick="deleteStatement(this, 'single-choice-grid-body${uniqueId}', 'single')"></i></td>
+                                    <td><input type="radio" name="Statement 2" value="Option 1"></td>
+                                    <td><input type="radio" name="Statement 2" value="Option 2"></td>
+                                    <td><input type="radio" name="Statement 2" value="Option 3"></td>
+                                    <td><input type="radio" name="Statement 2" value="Option 4"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <div class="row justify-content-between">
+                    <button type="button" class="btn btn-link" onclick="addStatement('single-choice-grid-body${uniqueId}', 'single')"><i class="fa-solid fa-plus"></i> Add Statement</button>
+                    <button type="button" class="btn btn-link" onclick="addOption('${uniqueId}', 'single')"><i class="fa-solid fa-plus"></i> Add Option</button>
+                </div>
+
+     <button type="button" class="btn btn-primary mt-3" onclick="previewGrid('${uniqueId}', 'radio')">Preview</button>
+                <div id="preview_${uniqueId}" class="preview mt-3" style="display:none;"></div>
+            <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                <div class="col-auto">
+                    <div class="p-3">
+                        <p style="margin-right:10px">Question Type</p>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="p-3">
+                        <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                            <i class="fas fa-th-list" style="margin-right:10px"></i> Single-choice-grid
+                        </button>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="p-3">
+                        <div class="question-icons">
+                            <i class="fas fa-copy" onclick="copySection(this)"></i>
+                            <i class="fas fa-image" onclick="imageSection(this)"></i>
+                            <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="p-3">
+                        <div class="question-footer">
+                            <div class="required-toggle">
+                                <span>Required</span>
+                                <label class="form-check">
+                                    <input type="checkbox" checked>
+                                    <span class="form-check-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    break;
+
+               case 'check-grid':
+    sectionHTML = `
+        <div class="container shadow section-container section12" id="${uniqueId}" style="margin-top:20px">
+            <div class="question-header" style="width:100%">
+                <input type="text" placeholder="Type a question" class="form-control">
+            </div>
+            <div class="question-body">
+                <input type="text" placeholder="Type a description" class="form-control">
+                <div id="QuizInput">
+                <form>
+                    <table class="survey-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th contenteditable="true">Option 1 <i class="fas fa-times delete-icon" onclick="deleteOption(this, '${uniqueId}')"></i></th>
+                                <th contenteditable="true">Option 2 <i class="fas fa-times delete-icon" onclick="deleteOption(this, '${uniqueId}')"></i></th>
+                                <th contenteditable="true">Option 3 <i class="fas fa-times delete-icon" onclick="deleteOption(this, '${uniqueId}')"></i></th>
+                                <th contenteditable="true">Option 4 <i class="fas fa-times delete-icon" onclick="deleteOption(this, '${uniqueId}')"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody id="multiple-choice-grid-body${uniqueId}">
+                            <tr>
+                                <td contenteditable="true">Statement 1 <i class="fas fa-times delete-icon" onclick="deleteStatement(this, 'multiple-choice-grid-body${uniqueId}', 'multiple')"></i></td>
+                                <td><input type="checkbox" name="Statement 1" value="Option 1"></td>
+                                <td><input type="checkbox" name="Statement 1" value="Option 2"></td>
+                                <td><input type="checkbox" name="Statement 1" value="Option 3"></td>
+                                <td><input type="checkbox" name="Statement 1" value="Option 4"></td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true">Statement 2 <i class="fas fa-times delete-icon" onclick="deleteStatement(this, 'multiple-choice-grid-body${uniqueId}', 'multiple')"></i></td>
+                                <td><input type="checkbox" name="Statement 2" value="Option 1"></td>
+                                <td><input type="checkbox" name="Statement 2" value="Option 2"></td>
+                                <td><input type="checkbox" name="Statement 2" value="Option 3"></td>
+                                <td><input type="checkbox" name="Statement 2" value="Option 4"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                </div>
+                <div class="row d-flex justify-content-between">
+                    <button type="button" class="btn btn-link" onclick="addStatement('multiple-choice-grid-body${uniqueId}', 'multiple')"><i class="fa-solid fa-plus"></i> Add Statement</button>
+                    <button type="button" class="btn btn-link" onclick="addOption('${uniqueId}', 'multiple')"><i class="fa-solid fa-plus"></i> Add Option</button>
+                </div>
+           <button type="button" class="btn btn-primary mt-3" onclick="previewGrid('${uniqueId}', 'checkbox')">Preview</button>
+                <div id="preview_${uniqueId}" class="preview mt-3" style="display:none;"></div>
+            <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                <div class="col-auto">
+                    <div class="p-3">
+                        <p style="margin-right:10px">Question Type</p>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="p-3">
+                        <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                            <i class="fas fa-th" style="margin-right:10px"></i> Multiple-choice-grid
+                        </button>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="p-3">
+                        <div class="question-icons">
+                            <i class="fas fa-copy" onclick="copySection(this)"></i>
+                            <i class="fas fa-image" onclick="imageSection(this)"></i>
+                            <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="p-3">
+                        <div class="question-footer">
+                            <div class="required-toggle">
+                                <span>Required</span>
+                                <label class="form-check">
+                                    <input type="checkbox" checked>
+                                    <span class="form-check-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    break;
+
+                case 'date-choice':
+                    sectionHTML = `
+                        <div class="container shadow section-container section13" id="${uniqueId}" style="margin-top:20px">
+                            <div class="question-header" style="width:100%">
+                                <input type="text" placeholder="Type a question" class="form-control">
+                            </div>
+                            <div class="question-body">
+                                <input type="text" placeholder="Type your description" class="form-control"><br>
+                                <div id="QuizInput">
+                                <div class="input-group">
+                                    <input type="date" id="date-option" placeholder="mm/dd/yyyy" class="form-control">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="dateIcon"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                <div class="col-auto">
+                                    <div class="p-3">
+                                        <p style="margin-right:10px">Question Type</p>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="p-3">
+                                        <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                            <i class="fas fa-calendar-alt" style="margin-right:10px"></i>Date
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="p-3">
+                                        <div class="question-icons">
+                                            <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                            <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                            <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="p-3">
+                                        <div class="question-footer">
+                                            <div class="required-toggle">
+                                                <span>Required</span>
+                                                <label class="form-check">
+                                                    <input type="checkbox" checked>
+                                                    <span class="form-check-slider"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+             case 'linear-scale':
+    sectionHTML = `
+        <div class="container shadow section-container section14" id="${uniqueId}" style="margin-top:20px">
+            <div class="question-header" style="width:100%">
+                <input type="text" placeholder="Type a question" class="form-control question-title" oninput="updateLinearScalePreview('${uniqueId}')">
+            </div>
+            <div class="question-body">
+                <input type="text" placeholder="Type a description" class="form-control question-description" oninput="updateLinearScalePreview('${uniqueId}')"><br>
+                <div class="form-group-inline">
+                    <label for="scaleStart">Start:</label>
+                    <select class="form-control" id="scaleStart" onchange="updateLinearScalePreview('${uniqueId}')">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                    </select>
+                    <label for="scaleEnd" class="ml-3">to</label>
+                    <select class="form-control ml-2" id="scaleEnd" onchange="updateLinearScalePreview('${uniqueId}')">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div class="label-container">
+                    <div class="form-group-inline">
+                        <label for="labelStart">Start Label:</label>
+                        <input type="text" class="form-control" id="labelStart" placeholder="Label for start" oninput="updateLinearScalePreview('${uniqueId}')">
+                    </div>
+                    <div class="form-group-inline">
+                        <label for="labelEnd">End Label:</label>
+                        <input type="text" class="form-control" id="labelEnd" placeholder="Label for end" oninput="updateLinearScalePreview('${uniqueId}')">
+                    </div>
+                </div>
+                <div id="preview_${uniqueId}" class="preview mt-3">
+                    <!-- Preview will be dynamically updated here -->
+                </div>
+            </div>
+            <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                <div class="col-auto">
+                    <div class="p-3">
+                        <p style="margin-right:10px">Question Type</p>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="p-3">
+                        <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                            <i class="fas fa-grip-lines" style="margin-right:10px"></i>Linear Scale
+                        </button>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="p-3">
+                        <div class="question-icons">
+                            <i class="fas fa-copy" onclick="copySection(this)"></i>
+                            <i class="fas fa-image" onclick="imageSection(this)"></i>
+                            <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="p-3">
+                        <div class="question-footer">
+                            <div class="required-toggle">
+                                <span>Required</span>
+                                <label class="form-check">
+                                    <input type="checkbox" checked>
+                                    <span class="form-check-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    break;
+
+
+                case 'time-choice':
+                    sectionHTML = `
+                        <div class="container shadow section-container section15" id="${uniqueId}" style="margin-top:20px">
+                            <div class="question-header" style="width:100%">
+                                <input type="text" placeholder="Type a question" class="form-control">
+                            </div>
+                            <div class="question-body">
+                                <input type="text" placeholder="Type your description" class="form-control"><br>
+                                
+                          <div id="QuizInput">
+                                <div class="input-group">
+                                    <input type="time" id="time-input" placeholder="select time" class="form-control">
+                                      <div class="input-group-append">
+                                        <span class="input-group-text" id="timepicker-icon"></span>
+                                    </div>
+                                </div>
+                            </div
+                            </div>
+                            <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                <div class="col-auto">
+                                    <div class="p-3">
+                                        <p style="margin-right:10px">Question Type</p>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="p-3">
+                                        <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                            <i class="fas fa-clock" style="margin-right:10px"></i>Time
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="p-3">
+                                        <div class="question-icons">
+                                            <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                            <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                            <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="p-3">
+                                        <div class="question-footer">
+                                            <div class="required-toggle">
+                                                <span>Required</span>
+                                                <label class="form-check">
+                                                    <input type="checkbox" checked>
+                                                    <span class="form-check-slider"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+              case 'upload-file':
+                    sectionHTML = `
+                        <div class="container shadow section-container section16" id="${uniqueId}" style="margin-top:20px">
+                            <div class="question-header" style="width:100%">
+                                <input type="text" placeholder="Type a question" class="form-control">
+                            </div>
+                            <div class="question-body">
+                                <input type="text" placeholder="Type a description" class="form-control">
+                                <div id="QuizInput">
+                                <div class="upload-area" onclick="document.getElementById('file-upload-input${uniqueId}').click()">
+                                    <input type="file" id="file-upload-input${uniqueId}" style="display: none;" onchange="handleFileUpload(event, 'uploaded-files${uniqueId}')">
+                                    <i class="fa-solid fa-file" style="color:#1A9970"></i>
+                                    <p><span style="color:#1A9970">Click to Upload</span> or drag and drop</p>
+                                    <p>(Max. file size: 3 MB)</p>
+                                </div>
+                                <div id="uploaded-files${uniqueId}"></div></div>
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <p style="margin-right:10px">Question Type</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                                <i class="fas fa-file-upload" style="margin-right:10px"></i>Upload File
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-icons">
+                                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                                <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-footer">
+                                                <div class="required-toggle">
+                                                    <span>Required</span>
+                                                    <label class="form-check">
+                                                        <input type="checkbox" checked>
+                                                        <span class="form-check-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    `;
+                    break;
+                case 'picture-choice':
+                    sectionHTML = `
+                        <div class="container shadow section-container section18" id="${uniqueId}" style="margin-top:20px">
+                            <div class="question-header" style="width:100%">
+                                <input type="text" placeholder="Type a question" class="form-control">
+                            </div>
+                            <div class="question-body">
+                                <input type="text" placeholder="Type a description" class="form-control">
+                                <div id="QuizInput">
+                                <div class="upload-area">
+                                    <div>
+                                        <button class="btn text-light" type="button" id="start-camera-btn${uniqueId}" style="background-color:#1A9970;align-items:center;justify-content:center;margin:20px">Take a Photo</button>
+                                        <video id="camera-stream${uniqueId}" style="display:none; width:100%; height:auto;"></video>
+                                        <canvas id="capture-canvas${uniqueId}" style="display:none;"></canvas>
+                                        <button id="take-photo-btn${uniqueId}" class="btn text-light" style="background-color:#1A9970; margin-top: 10px; display: none;">Capture Photo</button>
+                                        <div id="photo-preview${uniqueId}" style="margin-top: 20px;"></div>
+                                        <button id="delete-photo-btn${uniqueId}" class="btn text-light" style="background-color:#FF0000; margin-top: 10px; display: none;">Delete Photo</button>
+                                        <button id="upload-photo-btn${uniqueId}" class="btn text-light" style="background-color:#2164A6; margin-top: 10px; display: none;">Upload Photo</button>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <p style="margin-right:10px">Question Type</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                                <i class="fas fa-camera" style="margin-right:10px"></i>Take a Picture
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-icons">
+                                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                                <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="p-3">
+                                            <div class="question-footer">
+                                                <div class="required-toggle">
+                                                    <span>Required</span>
+                                                    <label class="form-check">
+                                                        <input type="checkbox" checked>
+                                                        <span class="form-check-slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    `;
+                    break;
+                case 'sectionB':
+                    sectionHTML = `
+                       <div class="container shadow section-container section20" id="${uniqueId}" style="margin-top:20px">
+    <div class="top-blue"></div>
+    <div class="header">
+        <div class="row d-flex justify-content-between"> 
+            <p>Section</p>
+            <div class="btn-group col-md-2">
+                <button type="button" class="btn btn-outline " dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color: #2164A6; margin-right: 1rem; margin-bottom: 10px;" id="mainDropdown">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="mainDropdown">
+                    <li>
+                        <button class="dropdown-item" type="button" onclick="duplicateSection(this)">Duplicate</button>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <button class="dropdown-item dropdown-toggle" type="button">Delete</button>
+                        <ul class="nested-dropdown dropdown-menu" style="display: none;">
+                            <li><button class="dropdown-item" type="button">Just Questions</button></li>
+                            <li><button class="dropdown-item" type="button">Section and Questions</button></li>
+                        </ul>
+                    </li>
+                    <li><button class="dropdown-item" type="button">Move Section</button></li>
+                </ul>
+            </div>
+           
+        </div>
+       
+        <div class="question-header">
+        <input type="text" placeholder="Section Title" class="form-control" id="section-input" ></div>
+        <hr class="divider">
+   
+        <div class="question-body" style="width: 100%;">
+           <input type="text" placeholder="Type a description" class="form-control">
+        </div>
+        
+         </div>
+    <br>
+</div>
+                    `;
+                    break;
+                    case 'numerical-choice':
+    sectionHTML = `
+        <div class="container shadow section-container section21" id="${uniqueId}" style="margin-top:20px">
+            <div class="question-header" style="width:100%">
+                <input type="text" placeholder="Type a question" class="form-control">
+            </div>
+            <div class="question-body">
+                <input type="text" placeholder="Type a description" class="form-control">
+                <div id="QuizInput" style="margin-top:10px">
+                    <input type="number" placeholder="Eg 123" class="form-control"><br>
+                </div>
+                <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-2 align-items-center">
+                    <div class="col-auto">
+                        <div class="p-3">
+                            <p style="margin-right:10px">Question Type</p>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="p-3">
+                            <button type="button" class="btn btn-outline btn-custom" data-toggle="modal" data-target="#questionTypeModal">
+                                <i class="fa-solid fa-list-ol" style="margin-right:10px"></i>Numerical
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="p-3">
+                            <div class="question-icons">
+                                <i class="fas fa-copy" onclick="copySection(this)"></i>
+                                <i class="fas fa-image" onclick="imageSection(this)"></i>
+                                <i class="fas fa-trash" onclick="deleteSection(this)"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="p-3">
+                            <div class="question-footer">
+                                <div class="required-toggle">
+                                    <span>Required</span>
+                                    <label class="form-check">
+                                        <input type="checkbox" checked>
+                                        <span class="form-check-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+    `;
+    break;
+                default:
+                    return;
+            }
+
+            const sectionWrapper = document.createElement('div');
+            sectionWrapper.innerHTML = sectionHTML;
+            newSectionsContainer.appendChild(sectionWrapper);
+
+            // Attach event listeners after the section is added
+            if (sectionType === 'date-choice') {
+                const dateIcon = sectionWrapper.querySelector('#dateIcon');
+                if (dateIcon) {
+                    dateIcon.addEventListener('click', function () {
+                        sectionWrapper.querySelector('#date-option').focus();
+                    });
+                }
+            }
+
+            if (sectionType === 'time-choice') {
+                const timepickerIcon = sectionWrapper.querySelector('#timepicker-icon');
+                if (timepickerIcon) {
+                    timepickerIcon.addEventListener('click', function () {
+                        sectionWrapper.querySelector('#time-input').focus();
+                    });
+                }
+            }
+
+            if (sectionType === 'upload-file') {
+                const fileUploadInput = sectionWrapper.querySelector(`#file-upload-input${uniqueId}`);
+                if (fileUploadInput) {
+                    fileUploadInput.addEventListener('change', function (event) {
+                        handleFileUpload(event, `uploaded-files${uniqueId}`);
+                    });
+                }
+            }
+
+            if (sectionType === 'picture-choice') {
+                document.getElementById(`start-camera-btn${uniqueId}`).addEventListener('click', () => startCamera(uniqueId));
+                document.getElementById(`take-photo-btn${uniqueId}`).addEventListener('click', () => capturePhoto(uniqueId));
+                document.getElementById(`delete-photo-btn${uniqueId}`).addEventListener('click', () => deletePhoto(uniqueId));
+                document.getElementById(`upload-photo-btn${uniqueId}`).addEventListener('click', () => uploadPhoto(uniqueId));
+            }
+        }
+
+        // Function to delete a section
+        function deleteSection(element) {
+            const section = element.closest('.section-container');
+            section.remove();
+        }
+
+        // Function to copy a section
+        function copySection(element) {
+            const section = element.closest('.section-container');
+            const clone = section.cloneNode(true);
+            section.parentNode.insertBefore(clone, section.nextSibling);
+        }
+
+      // Add a new statement (row) to the grid
+function addStatement(tbodyId, type) {
+    const tbody = document.getElementById(tbodyId);
+    const row = document.createElement('tr');
+
+    const statementNumber = tbody.rows.length + 1;
+    let columns = '';
+    if (type === 'single') {
+        columns += `<td contenteditable="true">Statement ${statementNumber} <i class="fas fa-times delete-icon" onclick="deleteStatement(this, '${tbodyId}', 'single')"></i></td>`;
+        for (let i = 1; i < tbody.rows[0].cells.length; i++) {
+            columns += `<td><input type="radio" name="Statement ${statementNumber}" value="Option ${i}"></td>`;
+        }
+    } else if (type === 'multiple') {
+        columns += `<td contenteditable="true">Statement ${statementNumber} <i class="fas fa-times delete-icon" onclick="deleteStatement(this, '${tbodyId}', 'multiple')"></i></td>`;
+        for (let i = 1; i < tbody.rows[0].cells.length; i++) {
+            columns += `<td><input type="checkbox" name="Statement ${statementNumber}" value="Option ${i}"></td>`;
+        }
+    }
+
+    row.innerHTML = columns;
+    tbody.appendChild(row);
+}
+
+
+// Add a new option (column) to the grid
+// Add a new option (column) to the grid
+function addOption(sectionId, type) {
+    const section = document.getElementById(sectionId);
+    if (!section) {
+        console.error(`Section with id ${sectionId} not found`);
+        return;
+    }
+
+    // Find the table within the section
+    const table = section.querySelector('.survey-table');
+    if (!table) {
+        console.error(`Survey table not found in section: ${sectionId}`);
+        return;
+    }
+
+    const theadRow = table.querySelector('thead tr');
+    if (!theadRow) {
+        console.error('Table header row not found in survey table:', sectionId);
+        return;
+    }
+
+    const rows = table.querySelectorAll('tbody tr');
+    if (!rows.length) {
+        console.error('No table rows found in the table body:', sectionId);
+        return;
+    }
+
+    // Add new header cell for the new option
+    const newHeaderCell = document.createElement('th');
+    newHeaderCell.setAttribute('contenteditable', 'true');
+    newHeaderCell.innerHTML = `Option ${theadRow.cells.length} <i class="fas fa-times delete-icon" onclick="deleteOption(this, '${sectionId}')"></i>`;
+    theadRow.appendChild(newHeaderCell);
+
+    // Add new cells to each row in the tbody
+    rows.forEach(row => {
+        const newCell = document.createElement('td');
+        if (type === 'single') {
+            newCell.innerHTML = `<input type="radio" name="${row.cells[0].textContent.trim()}" value="Option ${theadRow.cells.length - 1}">`;
+        } else if (type === 'multiple') {
+            newCell.innerHTML = `<input type="checkbox" name="${row.cells[0].textContent.trim()}" value="Option ${theadRow.cells.length - 1}">`;
+        }
+        row.appendChild(newCell);
+    });
+}
+
+
+
+// Delete a statement (row) from the grid
+function deleteStatement(element, tbodyId, type) {
+    const row = element.parentElement.parentElement;
+    const tbody = document.getElementById(tbodyId);
+    tbody.removeChild(row);
+
+    // Renumber statements without resetting placeholders or edits
+    const rows = tbody.querySelectorAll('tr');
+    rows.forEach((row, index) => {
+        const statementNumber = index + 1;
+        const statementCell = row.cells[0];
+        
+        // Preserve the content within the statement, only update the delete icon
+        statementCell.querySelector('i').setAttribute('onclick', `deleteStatement(this, '${tbodyId}', '${type}')`);
+
+        for (let i = 1; i < row.cells.length; i++) {
+            const input = row.cells[i].querySelector('input');
+            if (input) {
+                input.setAttribute('name', `Statement ${statementNumber}`);
+            }
+        }
+    });
+}
+
+
+// Delete an option (column) from the grid
+function deleteOption(element, sectionId) {
+    const th = element.parentElement;
+    const table = th.closest('table');
+    const columnIndex = th.cellIndex;
+
+    // Remove header cell
+    th.remove();
+
+    // Remove corresponding cells in each row
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        row.deleteCell(columnIndex);
+    });
+
+    // Renumber options without resetting placeholders or edits
+    const headerCells = table.querySelectorAll('thead th');
+    headerCells.forEach((th, index) => {
+        if (index > 0) {
+            // Preserve the content within the header, only update the delete icon
+            th.querySelector('i').setAttribute('onclick', `deleteOption(this, '${sectionId}')`);
+        }
+    });
+}
+
+
+
+
+        // Function to add a new option
+  // Function to add a new option
+   // Function to add a new option
+function addOtherOption(element) {
+    const parent = element.closest('.question-options');
+    const type = parent.querySelector('input').type;
+    const newIndex = parent.querySelectorAll('.question-option').length; // New index based on the number of children
+
+    const newOption = document.createElement('div');
+    newOption.className = 'question-option';
+    newOption.innerHTML = `
+        <input class="form-check-input" type="${type}" name="option${newIndex + 1}" id="option${newIndex + 1}">
+        <input type="text" placeholder="Option ${newIndex + 1}" class="form-control option-input">
+        <i class="fa-solid fa-trash deleteIcon" onclick="deleteOtherOption(this)"></i>
+    `;
+
+    parent.insertBefore(newOption, parent.querySelector('.add-option'));
+}
+
+// Function to delete an option
+function deleteOtherOption(element) {
+    const optionToDelete = element.closest('.question-option');
+    const parent = optionToDelete.closest('.question-options');
+    optionToDelete.remove();
+
+    // Renumber remaining options
+    const options = parent.querySelectorAll('.question-option:not(.add-option)');
+    options.forEach((option, index) => {
+        const input = option.querySelector('.form-check-input');
+        const textInput = option.querySelector('input[type="text"]');
+        input.name = `option${index + 1}`;
+        input.id = `option${index + 1}`;
+        textInput.placeholder = `Option ${index + 1}`;
+    });
+}
+
+        
+        
+//function to handle linear scale
+function updateLinearScalePreview(uniqueId) {
+    const sectionContainer = document.querySelector(`[id="${uniqueId}"]`);
+    const questionTitle = sectionContainer.querySelector('.question-title').value;
+    const scaleStart = sectionContainer.querySelector('#scaleStart').value;
+    const scaleEnd = sectionContainer.querySelector('#scaleEnd').value;
+    const labelStart = sectionContainer.querySelector('#labelStart').value;
+    const labelEnd = sectionContainer.querySelector('#labelEnd').value;
+
+    const previewContainer = sectionContainer.querySelector(`#preview_${uniqueId}`);
+    let scaleHtml = `<label>${labelStart || scaleStart}</label> `;
+    for (let i = parseInt(scaleStart); i <= parseInt(scaleEnd); i++) {
+        scaleHtml += `<input type="radio" name="scale_${uniqueId}" value="${i}"> ${i} `;
+    }
+    scaleHtml += ` <label>${labelEnd || scaleEnd}</label>`;
+
+    // previewContainer.innerHTML = `
+    //     <h5>${questionTitle}</h5>
+    //     <div>${scaleHtml}</div>
+    // `;
+}
+
+   function previewChoice(uniqueId, inputType) {
+    const sectionContainer = document.querySelector(`[id="${uniqueId}"]`);
+    const questionTitle = sectionContainer.querySelector('.question-title').value;
+    const options = sectionContainer.querySelectorAll('.option-input');
+    
+    const previewContainer = sectionContainer.querySelector(`#preview_${uniqueId}`);
+    const previewQuestion = previewContainer.querySelector('.preview-question');
+    const previewOptions = previewContainer.querySelector('.preview-options');
+
+    previewQuestion.textContent = questionTitle;
+
+    let optionsHtml = '';
+    options.forEach((option, index) => {
+        if (option.value.trim() !== '') {
+            optionsHtml += `
+                <div>
+                    <input type="${inputType}" name="previewOption_${uniqueId}" id="previewOption_${uniqueId}_${index}" value="${option.value}">
+                    <label for="previewOption_${uniqueId}_${index}">${option.value}</label>
+                </div>`;
+        }
+    });
+
+    // Add the "Other" option with a text input
+    optionsHtml += `
+        <div>
+            <input type="${inputType}" name="previewOption_${uniqueId}" id="previewOption_${uniqueId}_other" value="Other">
+            <label for="previewOption_${uniqueId}_other">Other</label>
+            <input type="text" id="otherOptionInput_${uniqueId}" class="form-control" placeholder="Please specify" style="display:none; margin-top: 5px;" />
+        </div>`;
+
+    previewOptions.innerHTML = optionsHtml;
+    previewContainer.style.display = 'block';
+
+    // Add event listener to show/hide the "Other" text input
+    const otherOptionInput = document.getElementById(`otherOptionInput_${uniqueId}`);
+
+    document.querySelectorAll(`[name="previewOption_${uniqueId}"]`).forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.id.includes('other')) {
+                otherOptionInput.style.display = 'block';
+            } else {
+                otherOptionInput.style.display = 'none';
+                otherOptionInput.value = ''; // Clear the text input when "Other" is not selected
+            }
+        });
+    });
+}
+
+//function to preview grid options
+
+function previewGrid(uniqueId, gridType) {
+    const sectionContainer = document.querySelector(`[id="${uniqueId}"]`);
+    const questionTitle = sectionContainer.querySelector('.question-header input').value;
+    const description = sectionContainer.querySelector('.question-body input[placeholder="Type a description"]').value;
+    const headers = Array.from(sectionContainer.querySelectorAll('thead th')).slice(1).map(th => th.textContent.trim());
+    const rows = Array.from(sectionContainer.querySelectorAll('tbody tr')).map(row => {
+        const rowTitle = row.querySelector('td').textContent.trim();
+        return {
+            rowTitle,
+            inputs: Array.from(row.querySelectorAll('td input')).map(input => input.value)
+        };
+    });
+
+    const previewContainer = sectionContainer.querySelector(`#preview_${uniqueId}`);
+    let previewHTML = `<h5>${questionTitle}</h5><p>${description}</p><table class="table table-bordered"><thead><tr><th></th>`;
+
+    headers.forEach(header => {
+        previewHTML += `<th>${header}</th>`;
+    });
+    previewHTML += `</tr></thead><tbody>`;
+
+    rows.forEach(row => {
+        previewHTML += `<tr><td>${row.rowTitle}</td>`;
+        row.inputs.forEach((input, index) => {
+            if (gridType === 'radio') {
+                previewHTML += `<td><input type="radio" name="${row.rowTitle}" value="${headers[index]}"></td>`;
+            } else if (gridType === 'checkbox') {
+                previewHTML += `<td><input type="checkbox" name="${row.rowTitle}" value="${headers[index]}"></td>`;
+            }
+        });
+        previewHTML += `</tr>`;
+    });
+
+    previewHTML += `</tbody></table>`;
+    previewContainer.innerHTML = previewHTML;
+    previewContainer.style.display = 'block';
+}
+
+
+        // // Function to handle file upload
+        // function handleFileUpload(event, uploadId) {
+        //     const fileInput = event.target;
+        //     const files = fileInput.files;
+        //     const maxFileSize = 3 * 1024 * 1024; // 3MB
+        //     const uploadedFilesContainer = document.getElementById(uploadId);
+
+        //     for (const file of files) {
+        //         if (file.size <= maxFileSize) {
+        //             const fileElement = document.createElement('div');
+        //             fileElement.innerHTML = `
+        //                 <p>${file.name} (${Math.round(file.size / 1024)} KB)</p>
+        //                 <button type="button" class="btn text-light" style="background-color:#2164A6" onclick="deleteUploadedFile(this)">Delete</button>
+        //             `;
+        //             uploadedFilesContainer.appendChild(fileElement);
+        //         } else {
+        //             alert(`File "${file.name}" exceeds the maximum size of 3 MB.`);
+        //         }
+        //     }
+
+        //     fileInput.value = ''; // Clear the input
+        // }
+
+        // // Function to delete an uploaded file
+        // function deleteUploadedFile(element) {
+        //     element.closest('div').remove();
+        // }
+
+        // Event listeners for question type options
+        document.getElementById('phone-number-option').addEventListener('click', function () { addSection('phone'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('long-answer-option').addEventListener('click', function () { addSection('long-answer');$('#questionTypeModal').modal('hide'); });
+        document.getElementById('short-answer-option').addEventListener('click', function () { addSection('short-answer'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('email-option').addEventListener('click', function () { addSection('email');$('#questionTypeModal').modal('hide'); });
+        document.getElementById('link-option').addEventListener('click', function () { addSection('link'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('single-choice-option').addEventListener('click', function () { addSection('single-choice');$('#questionTypeModal').modal('hide'); });
+        document.getElementById('check-box-option').addEventListener('click', function () { addSection('check-box'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('single-grid-option').addEventListener('click', function () { addSection('single-choice-grid'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('check-grid-option').addEventListener('click', function () { addSection('check-grid'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('date-option').addEventListener('click', function () { addSection('date-choice'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('linear-scale-option').addEventListener('click', function () { addSection('linear-scale'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('time-option').addEventListener('click', function () { addSection('time-choice'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('upload-file-option').addEventListener('click', function () { addSection('upload-file'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('section-option').addEventListener('click', function () { addSection('sectionB'); $('#questionTypeModal').modal('hide');});
+        document.getElementById('picture-option').addEventListener('click', function () { addSection('picture-choice'); $('#questionTypeModal').modal('hide');});
+         document.getElementById('numerical-option').addEventListener('click', function () { addSection('numerical-choice'); $('#questionTypeModal').modal('hide');});
+        
+      // Function to handle file upload
+function handleFileUpload(event, uploadId) {
+    const fileInput = event.target;
+    const files = fileInput.files;
+    const maxFileSize = 3 * 1024 * 1024; // 3MB
+    const uploadedFilesContainer = document.getElementById(uploadId);
+
+    for (const file of files) {
+        if (file.size <= maxFileSize) {
+            const fileElement = document.createElement('div');
+            fileElement.innerHTML = `
+                <p>${file.name} (${Math.round(file.size / 1024)} KB)</p>
+                <button type="button" class="btn text-light" style="background-color:#2164A6" onclick="deleteUploadedFile(this)">Delete</button>
+            `;
+            uploadedFilesContainer.appendChild(fileElement);
+        } else {
+            alert(`File "${file.name}" exceeds the maximum size of 3 MB.`);
+        }
+    }
+
+    fileInput.value = ''; // Clear the input
+}
+
+function deleteUploadedFile(element) {
+    element.closest('div').remove();
+}
+
+function startCamera(uniqueId) {
+    const video = document.getElementById(`camera-stream${uniqueId}`);
+    const takePhotoBtn = document.getElementById(`take-photo-btn${uniqueId}`);
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+            video.srcObject = stream;
+            video.play();
+            video.style.display = 'block';
+            takePhotoBtn.style.display = 'block';
+        }).catch(function (err) {
+            alert('Error accessing camera: ' + err.message);
+        });
+    } else {
+        alert('Your browser does not support camera access.');
+    }
+}
+
+function capturePhoto(uniqueId) {
+    const video = document.getElementById(`camera-stream${uniqueId}`);
+    const canvas = document.getElementById(`capture-canvas${uniqueId}`);
+    const context = canvas.getContext('2d');
+    const photoPreview = document.getElementById(`photo-preview${uniqueId}`);
+    const deletePhotoBtn = document.getElementById(`delete-photo-btn${uniqueId}`);
+    const uploadPhotoBtn = document.getElementById(`upload-photo-btn${uniqueId}`);
+    const takePhotoBtn = document.getElementById(`take-photo-btn${uniqueId}`);
+    const startCameraBtn = document.getElementById(`start-camera-btn${uniqueId}`);
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const imageDataURL = canvas.toDataURL('image/png');
+    photoPreview.innerHTML = `<img src="${imageDataURL}" alt="Captured Photo">`;
+    deletePhotoBtn.style.display = 'block';
+    uploadPhotoBtn.style.display = 'block';
+
+    // Stop the camera feed
+    video.srcObject.getTracks().forEach(track => track.stop());
+
+    // Hide the camera feed and capture button
+    video.style.display = 'none';
+    takePhotoBtn.style.display = 'none';
+    startCameraBtn.style.display = 'none';
+}
+
+function deletePhoto(uniqueId) {
+    const photoPreview = document.getElementById(`photo-preview${uniqueId}`);
+    const deletePhotoBtn = document.getElementById(`delete-photo-btn${uniqueId}`);
+    const uploadPhotoBtn = document.getElementById(`upload-photo-btn${uniqueId}`);
+    const startCameraBtn = document.getElementById(`start-camera-btn${uniqueId}`);
+
+    photoPreview.innerHTML = '';
+    deletePhotoBtn.style.display = 'none';
+    uploadPhotoBtn.style.display = 'none';
+    startCameraBtn.style.display = 'block';
+}
+
+function uploadPhoto(uniqueId) {
+    // Simulate an upload action
+    alert('Photo uploaded successfully!');
+
+    const uploadPhotoBtn = document.getElementById(`upload-photo-btn${uniqueId}`);
+    uploadPhotoBtn.style.display = 'none';
+}
+
+
+        function duplicateSection(element) {
+            const sectionToDuplicate = element.closest('.section-container');
+            const clonedSection = sectionToDuplicate.cloneNode(true);
+        
+            // Insert the cloned section immediately after the current section
+            sectionToDuplicate.parentNode.insertBefore(clonedSection, sectionToDuplicate.nextSibling);
+        }
+
+// Include this script in your current page
+
+function previewForm() {
+    // Collect the form title and description
+    const formTitleInput = document.getElementById('form-input');
+    const formDescriptionTextarea = document.querySelector('.form-textarea');
+   
+
+    // Ensure the form title and description exist
+    const formTitle = formTitleInput ? formTitleInput.value : '';
+    const formDescription = formDescriptionTextarea ? formDescriptionTextarea.value : '';
+   
+
+    // Initialize an array to store questions
+    let questions = [];
+
+    // Collect all sections
+    document.querySelectorAll('.section-container').forEach((section, index) => {
+        const questionTitleInput = section.querySelector('.question-header input');
+        const questionDescriptionInput = section.querySelector('.question-body input');
+        const questionType = section.querySelector('.btn-outline') ? section.querySelector('.btn-outline').innerText.trim() : '';
+        const required = section.querySelector('.required-toggle input[type="checkbox"]')?.checked || false;
+
+        // Ensure the question title and description inputs exist
+        const questionTitle = questionTitleInput ? questionTitleInput.value : '';
+        const questionDescription = questionDescriptionInput ? questionDescriptionInput.value : '';
+
+        // Generate a unique ID for this question
+        const uniqueId = `question-${index}`;
+
+        let inputHtml = '';
+
+        // Handle different question types
+        switch (questionType.toLowerCase()) {
+            case 'phone number':
+                inputHtml = `<input type="tel" placeholder="Enter your Phone Number" class="form-control">`;
+                break;
+
+            case 'email':
+                inputHtml = `<input type="email" placeholder="Enter your email" class="form-control">`;
+                break;
+
+            case 'link':
+                inputHtml = `<input type="url" placeholder="Enter a link" class="form-control">`;
+                break;
+
+            case 'numerical':
+                inputHtml = `<input type="number" placeholder="Eg 123" class="form-control">`;
+                break;
+
+            case 'long answer':
+                inputHtml = `<textarea class="form-control" placeholder="Long-answer text" rows="4"></textarea>`;
+                break;
+
+            case 'short answer':
+                inputHtml = `<textarea class="form-control" placeholder="Short-answer text" rows="2"></textarea>`;
+                break;
+
+           case 'single choice':
+        const radioOptions = Array.from(section.querySelectorAll('.option-input'))
+            .filter(option => option.value.trim() !== '') // Filter out empty options
+            .map((option, i) => `
+                <div>
+                    <input type="radio" name="previewOption_${uniqueId}" id="previewOption_${uniqueId}_${i}" value="${option.value}">
+                    <label for="previewOption_${uniqueId}_${i}">${option.value}</label>
+                </div>
+            `).join('');
+    
+        inputHtml = `
+            <div>${radioOptions}</div>
+            <div>
+                <input type="radio" name="previewOption_${uniqueId}" id="previewOption_${uniqueId}_other" value="Other">
+                <label for="previewOption_${uniqueId}_other">Other</label>
+                <input type="text" id="otherOptionInput_${uniqueId}" class="form-control" placeholder="Please specify" style="display:none; margin-top: 5px;" />
+            </div>`;
+        break;
+
+        case 'multiple choice':
+            const checkboxOptions = Array.from(section.querySelectorAll('.option-input'))
+                .filter(option => option.value.trim() !== '') // Filter out empty options
+                .map((option, i) => `
+                    <div>
+                        <input type="checkbox" name="previewOption_${uniqueId}" id="checkbox_${uniqueId}_${i}" value="${option.value}">
+                        <label for="checkbox_${uniqueId}_${i}">${option.value}</label>
+                    </div>
+                `).join('');
+        
+            inputHtml = `
+                <div>${checkboxOptions}</div>
+                <div>
+                    <input type="checkbox" name="previewOption_${uniqueId}" id="previewOption_${uniqueId}_other" value="Other">
+                    <label for="previewOption_${uniqueId}_other">Other</label>
+                    <input type="text" id="otherOptionInput_${uniqueId}" class="form-control" placeholder="Please specify" style="display:none; margin-top: 5px;" />
+                </div>`;
+            break;
+
+
+            case 'date':
+                inputHtml = `
+                    <div class="input-group">
+                        <input type="date" class="form-control">
+                        <span class="input-group-text"></span>
+                    </div>`;
+                break;
+
+            case 'time':
+                inputHtml = `
+                    <div class="input-group">
+                        <input type="time" class="form-control">
+                        <span class="input-group-text"></span>
+                    </div>`;
+                break;
+                
+            case 'single-choice grid':
+                const gridHeaders = Array.from(section.querySelectorAll('thead th')).slice(1).map(th => `<th>${th.textContent}</th>`).join('');
+                const gridRows = Array.from(section.querySelectorAll('tbody tr')).map(row => {
+                    const rowTitle = row.querySelector('td').textContent;
+                    const inputs = Array.from(row.querySelectorAll('td input')).map(input => `<td><input type="radio" name="${rowTitle}" value="${input.value}"></td>`).join('');
+                    return `<tr><td>${rowTitle}</td>${inputs}</tr>`;
+                }).join('');
+                inputHtml = `<table class="table"><thead><tr><th></th>${gridHeaders}</tr></thead><tbody>${gridRows}</tbody></table>`;
+                break;
+
+            case 'check-grid':
+                const checkGridHeaders = Array.from(section.querySelectorAll('thead th')).slice(1).map(th => `<th>${th.textContent}</th>`).join('');
+                const checkGridRows = Array.from(section.querySelectorAll('tbody tr')).map(row => {
+                    const rowTitle = row.querySelector('td').textContent;
+                    const inputs = Array.from(row.querySelectorAll('td input')).map(input => `<td><input type="checkbox" name="${rowTitle}" value="${input.value}"></td>`).join('');
+                    return `<tr><td>${rowTitle}</td>${inputs}</tr>`;
+                }).join('');
+                inputHtml = `<table class="table"><thead><tr><th></th>${checkGridHeaders}</tr></thead><tbody>${checkGridRows}</tbody></table>`;
+                break;
+
+            case 'upload file':
+                const uploadUniqueId = `upload-file-${index}`;
+                inputHtml = `
+                    <div class="upload-area" onclick="document.getElementById('file-upload-input${uploadUniqueId}').click()">
+                        <input type="file" id="file-upload-input${uploadUniqueId}" style="display: none;" onchange="handleFileUpload(event, 'uploaded-files${uploadUniqueId}')">
+                        <i class="fa-solid fa-file" style="color:#1A9970"></i>
+                        <p><span style="color:#1A9970">Click to Upload</span> or drag and drop</p>
+                        <p>(Max. file size: 3 MB)</p>
+                    </div>
+                    <div id="uploaded-files${uploadUniqueId}" class="uploaded-files-container"></div>`;
+                break;
+
+          case 'linear scale':
+            const scaleStart = section.querySelector('#scaleStart').value;
+            const scaleEnd = section.querySelector('#scaleEnd').value;
+            const labelStart = section.querySelector('#labelStart').value;
+            const labelEnd = section.querySelector('#labelEnd').value;
+        
+            let scaleHtml = `<label style="font-weight: bold; margin-right: 10px;">${labelStart || scaleStart}</label>`;
+            for (let i = parseInt(scaleStart); i <= parseInt(scaleEnd); i++) {
+                scaleHtml += `<input type="radio" name="scale_${index}" value="${i}" style="margin: 0 10px;"> <label style="font-weight: bold; margin-right: 10px;">${i}</label>`;
+            }
+            scaleHtml += ` <label style="font-weight: bold; margin-left: 10px;">${labelEnd || scaleEnd}</label>`;
+        
+            inputHtml = `
+                <div>
+                    <div>${scaleHtml}</div>
+                </div>`;
+            break;
+
+
+            case 'take picture':
+                const cameraUniqueId = `camera-${index}`;
+                inputHtml = `
+                    <button type="button" id="start-camera-btn${cameraUniqueId}" class="btn text-light" style="background-color:#1A9970; font-size: 18px; padding: 10px 20px; border-radius: 5px;" onclick="startCamera('${cameraUniqueId}')">Take a Photo</button>
+                    <video id="camera-stream${cameraUniqueId}" style="display:none; width: 100%; height: auto;" autoplay></video>
+                    <button type="button" id="take-photo-btn${cameraUniqueId}" class="btn text-light" style="background-color:#1A9970; display:none; font-size: 18px; padding: 10px 20px; border-radius: 5px;" onclick="capturePhoto('${cameraUniqueId}')">Take Photo</button>
+                    <canvas id="capture-canvas${cameraUniqueId}" style="display:none;"></canvas>
+                    <div id="photo-preview${cameraUniqueId}"></div>
+                    <button type="button" id="delete-photo-btn${cameraUniqueId}" class="btn text-light" style="background-color:#1A9970; display:none; font-size: 18px; padding: 10px 20px; border-radius: 5px;" onclick="deletePhoto('${cameraUniqueId}')">Delete Photo</button>
+                    <button type="button" id="upload-photo-btn${cameraUniqueId}" class="btn text-light" style="background-color:#1A9970; display:none; font-size: 18px; padding: 10px 20px; border-radius: 5px;" onclick="uploadPhoto('${cameraUniqueId}')">Upload Photo</button>`;
+                break;
+               
+        //   case 'sectionb': // SectionB case
+                
+        //         inputHtml = `
+        //             <div>
+                        
+        //                 <hr class="divider">
+        //             </div>
+        //         `;
+        //         break;
+
+            default:
+                inputHtml = section.querySelector('#QuizInput') ? section.querySelector('#QuizInput').innerHTML : '';
+        }
+
+        // Add the question details to the array if they exist
+        if (questionTitle || questionDescription || inputHtml) {
+            questions.push({
+                title: questionTitle,
+                description: questionDescription,
+                inputHtml: inputHtml,
+                required: required,
+                uniqueId: uniqueId // Store the uniqueId in the question object
+            });
+        }
+    });
+
+    // Store form details in local storage
+    localStorage.setItem('formTitle', formTitle);
+    localStorage.setItem('formDescription', formDescription);
+    localStorage.setItem('questions', JSON.stringify(questions));
+
+    // Redirect to the preview page
+    window.location.href = 'preview.html';
+}
+
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-DBjhmcey5aFbqMIosN9iBFDPhj5PbGO/N6DAw1KjA7PEl4ImzCwDE9OUr/Eq8suD"
+crossorigin="anonymous"></script>
+
+
+</body>
+</html>

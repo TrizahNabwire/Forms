@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Preview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU6JAhVhZL8TJTOn3U7FjdMA8Q8SarJTZ5IFl" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="formCSS.css">
+ 
+    <style>
+  body { 
+            font-family: Century Gothic; 
+            padding: 20px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column; 
+            min-height: 40vh; 
+            background-color: #f7f7f7; 
+        }
+        .section-container { 
+            background-color: #fff; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            padding: 20px; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            width: 70%; 
+        }
+        #preview-questions{
+            width:100%;
+        }
+        .section-contain {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            text-align: left;
+            padding: 20px;
+            border-radius: 10px;
+            width: 70%;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            background-color: #f7f7f7;
+            margin: 20px 0;
+        }
+        .section-contain::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background-color: #2164A6;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            z-index: 0;
+        }
+        .section-contain h1, .section-contain p {
+            position: relative;
+            z-index: 1;
+        }
+        .question-header {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .question-body {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .question-input {
+            margin-top: 15px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        .input-group .form-control {
+            flex: 1;
+        }
+        .input-group-append {
+            background-color: #f8f9fa;
+            border: 1px solid #ccc;
+            border-left: 0;
+            padding: 10px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .table, .table th, .table td {
+            border: 1px solid #ddd;
+        }
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+        }
+         .submit-clear-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 70%;
+            margin-top: 20px;
+        }
+        .submit-clear-container button {
+            background-color: #2164A6; /* Use your preferred background color */
+            color: #fff; /* Light text color */
+            font-size: 18px; /* Make the text size larger */
+            padding: 12px 24px; /* Increase padding for a larger button */
+            border: none; /* Remove the border */
+            border-radius: 5px; /* Slightly round the corners */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+
+        .submit-clear-container button:hover {
+            background-color: #1A4F8B; /* Darker shade for hover effect */
+        }
+     
+    .highlighted {
+        border: 2px dashed red !important;
+    }
+    </style>
+</head>
+<body>
+ <div class="section-container">
+        <div class="row">
+            <div class="col-md-6 d-flex align-items-center" style="white-space:nowrap">
+                <div class="col-md-6">
+                    <img src="" class="img-fluid" alt="">Logo
+                </div>
+                <div class="col-md-6 ms-3">
+                    <p><i class="fa-solid fa-phone" style="color: #1A9970; margin-right: 8px;"></i> +254 701 402 513</p>
+                    <p><i class="fa-solid fa-location-dot me-2" style="color: #1A9970; margin-right: 8px;"></i>Address</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-contain">
+        <h1 id="preview-title"></h1>
+        <p id="preview-description"></p>
+         <hr class="divider">
+           <div class="row">
+            <p style="margin-left:20px">trizahnabwire20@gmail.com <a href="#" style="color:#2164A6; text-decoration: none;">Switch Account</a></p>
+        </div>
+        </div>
+
+        <div id="preview-questions"></div>
+        
+         <div id="pagination-controls">
+        <button class="btn text-light" style="background-color: #2164A6;" id="prev-button" onclick="prevPage()" >Previous</button>
+        <button class="btn text-light" style="background-color: #2164A6;" id="next-button" onclick="nextPage()">Next</button>
+    </div>
+    
+     <div class="submit-clear-container">
+        <button type="submit" class="btn text-light" style="background-color:#2164A6" onclick="return validateForm()">Submit</button>
+        <!--<p style="margin: 0; color: #2164A6; font-weight: bold; cursor: pointer;" onclick="document.querySelector('form').reset();">Clear Form</p>-->
+            <p class="" style="margin: 0; color: #2164A6; font-weight: bold; cursor: pointer;" onclick="showClearFormModal()">Clear form</button>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Retrieve stored form data
+    const formTitle = localStorage.getItem('formTitle');
+    const formDescription = localStorage.getItem('formDescription');
+    const questions = JSON.parse(localStorage.getItem('questions'));
+
+    // Populate the form title and description
+    document.getElementById('preview-title').innerText = formTitle || "Untitled Form";
+    document.getElementById('preview-description').innerText = formDescription || "";
+
+    // Populate the questions
+    const previewQuestions = document.getElementById('preview-questions');
+    questions.forEach((question) => {
+        const questionContainer = document.createElement('div');
+        questionContainer.classList.add('container', 'shadow', 'section-container');
+        questionContainer.style.marginTop = "20px";
+
+        // Mark the question as required if necessary
+        const requiredIndicator = question.required ? '<span style="color: red;">*</span>' : '';
+
+        // Remove delete icons from question.inputHtml if they exist
+        const sanitizedInputHtml = question.inputHtml.replace(/<i class="fas fa-times delete-icon".*?<\/i>/g, '');
+
+        // Dynamically insert the HTML for each question
+        questionContainer.innerHTML = `
+            <div class="question-header">${question.title} ${requiredIndicator}</div>
+            ${question.description ? `<div class="question-body">${question.description}</div>` : ''}
+            <div class="question-input">${sanitizedInputHtml}</div>
+        `;
+
+        previewQuestions.appendChild(questionContainer);
+
+        // Add event listeners to handle the "Other" option
+        const otherOptionInput = questionContainer.querySelector(`#otherOptionInput_${question.uniqueId}`);
+        const options = questionContainer.querySelectorAll(`[name="previewOption_${question.uniqueId}"]`);
+        
+        options.forEach(option => {
+            option.addEventListener('change', function() {
+                if (this.id.includes('other')) {
+                    otherOptionInput.style.display = 'block';
+                    otherOptionInput.placeholder = "Please specify";
+                } else {
+                    otherOptionInput.style.display = 'none';
+                    otherOptionInput.value = ''; // Clear the text input when "Other" is not selected
+                }
+            });
+        });
+    });
+});
+
+function validateForm() {
+    let valid = true;
+
+    // Validate phone and email fields regardless of their requirement
+    const emailField = document.querySelector('input[type="email"]');
+    const phoneField = document.querySelector('input[type="tel"]');
+
+    if (emailField && emailField.value.trim() !== '') {
+        if (!validateEmail(emailField.value.trim())) {
+            valid = false;
+            emailField.style.border = '2px solid red';
+            alert('Please enter a valid email address.');
+        } else {
+            emailField.style.border = ''; // Remove the red border for valid input
+        }
+    }
+
+    if (phoneField && phoneField.value.trim() !== '') {
+        if (!validatePhoneNumber(phoneField.value.trim())) {
+            valid = false;
+            phoneField.style.border = '2px solid red';
+            alert('Please enter a valid phone number.');
+        } else {
+            phoneField.style.border = ''; // Remove the red border for valid input
+        }
+    }
+
+    // General validation for required fields
+    const questionContainers = document.querySelectorAll('.section-container');
+    questionContainers.forEach(container => {
+        const isRequired = container.querySelector('.question-header span') !== null;
+        const requiredFields = container.querySelectorAll('input, textarea, select');
+        let fieldValid = false;
+
+        requiredFields.forEach(field => {
+            if (isRequired) {
+                if (field.type === 'radio' || field.type === 'checkbox') {
+                    // Grouped by the same name attribute
+                    const group = container.querySelectorAll(`input[name="${field.name}"]`);
+                    const checkedOption = Array.from(group).some(input => input.checked);
+                    if (checkedOption) {
+                        fieldValid = true;
+                        group.forEach(input => input.style.border = ''); // Reset the border for valid input
+                    }
+                } else if (field.type === 'file') {
+                    const uploadContainer = container.querySelector('.uploaded-files-container');
+                    if (uploadContainer && uploadContainer.childElementCount > 0) {
+                        fieldValid = true;
+                    }
+                } else if (field.value.trim()) {
+                    fieldValid = true;
+                }
+
+                // Special handling for photo validation
+                
+                const photoPreview = container.querySelector('#photo-preview');
+                if (photoPreview && photoPreview.childElementCount > 0) {
+                    fieldValid = true;
+                }
+
+                // Highlight required field if not valid
+                if (!fieldValid) {
+                    valid = false;
+                    container.style.border = '2px solid red';  // Highlight the section in red
+                    if (field.type === 'radio' || field.type === 'checkbox') {
+                        const group = container.querySelectorAll(`input[name="${field.name}"]`);
+                        group.forEach(input => input.style.border = '2px solid red'); // Highlight all in the group
+                    } else {
+                        field.style.border = '2px solid red';  // Highlight the field in red
+                    }
+                } else {
+                    container.style.borderColor = '';  // Reset the section border color if filled
+                    if (field.type !== 'radio' && field.type !== 'checkbox') {
+                        field.style.borderColor = '';  // Reset the field border color if filled
+                    }
+                }
+            }
+        });
+    });
+
+    if (!valid) {
+        alert('Please fill out all required fields correctly.');
+    } else {
+        alert('Form Submitted Successfully');
+    }
+    return valid;
+}
+
+
+// Email validation function
+function validateEmail(email) {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+}
+
+// Phone number validation function
+function validatePhoneNumber(phoneNumber) {
+    const phonePattern = /^\+?[\d\s\-()]{7,}$/;
+    return phonePattern.test(phoneNumber);
+}
+
+function showClearFormModal() {
+    if (confirm('Are you sure you want to clear the form?')) {
+        document.querySelector('form').reset();
+    }
+}
+
+</script>
+<script>
+  // Function to handle file upload
+function handleFileUpload(event, uploadId) {
+    const fileInput = event.target;
+    const files = fileInput.files;
+    const maxFileSize = 3 * 1024 * 1024; // 3MB
+    const uploadedFilesContainer = document.getElementById(uploadId);
+
+    for (const file of files) {
+        if (file.size <= maxFileSize) {
+            const fileElement = document.createElement('div');
+            fileElement.innerHTML = `
+                <p>${file.name} (${Math.round(file.size / 1024)} KB)</p>
+                <button type="button" class="btn text-light" style="background-color:#2164A6" onclick="deleteUploadedFile(this)">Delete</button>
+            `;
+            uploadedFilesContainer.appendChild(fileElement);
+        } else {
+            alert(`File "${file.name}" exceeds the maximum size of 3 MB.`);
+        }
+    }
+
+    fileInput.value = ''; // Clear the input
+}
+
+function deleteUploadedFile(element) {
+    element.closest('div').remove();
+}
+
+function startCamera(uniqueId) {
+    const video = document.getElementById(`camera-stream${uniqueId}`);
+    const takePhotoBtn = document.getElementById(`take-photo-btn${uniqueId}`);
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+            video.srcObject = stream;
+            video.play();
+            video.style.display = 'block';
+            takePhotoBtn.style.display = 'block';
+        }).catch(function (err) {
+            alert('Error accessing camera: ' + err.message);
+        });
+    } else {
+        alert('Your browser does not support camera access.');
+    }
+}
+
+function capturePhoto(uniqueId) {
+    const video = document.getElementById(`camera-stream${uniqueId}`);
+    const canvas = document.getElementById(`capture-canvas${uniqueId}`);
+    const context = canvas.getContext('2d');
+    const photoPreview = document.getElementById(`photo-preview${uniqueId}`);
+    const deletePhotoBtn = document.getElementById(`delete-photo-btn${uniqueId}`);
+    const uploadPhotoBtn = document.getElementById(`upload-photo-btn${uniqueId}`);
+    const takePhotoBtn = document.getElementById(`take-photo-btn${uniqueId}`);
+    const startCameraBtn = document.getElementById(`start-camera-btn${uniqueId}`);
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const imageDataURL = canvas.toDataURL('image/png');
+    photoPreview.innerHTML = `<img src="${imageDataURL}" alt="Captured Photo">`;
+    deletePhotoBtn.style.display = 'block';
+    uploadPhotoBtn.style.display = 'block';
+
+    // Stop the camera feed
+    video.srcObject.getTracks().forEach(track => track.stop());
+
+    // Hide the camera feed and capture button
+    video.style.display = 'none';
+    takePhotoBtn.style.display = 'none';
+    startCameraBtn.style.display = 'none';
+}
+
+function deletePhoto(uniqueId) {
+    const photoPreview = document.getElementById(`photo-preview${uniqueId}`);
+    const deletePhotoBtn = document.getElementById(`delete-photo-btn${uniqueId}`);
+    const uploadPhotoBtn = document.getElementById(`upload-photo-btn${uniqueId}`);
+    const startCameraBtn = document.getElementById(`start-camera-btn${uniqueId}`);
+
+    photoPreview.innerHTML = '';
+    deletePhotoBtn.style.display = 'none';
+    uploadPhotoBtn.style.display = 'none';
+    startCameraBtn.style.display = 'block';
+}
+
+function uploadPhoto(uniqueId) {
+    // Simulate an upload action
+    alert('Photo uploaded successfully!');
+
+    const uploadPhotoBtn = document.getElementById(`upload-photo-btn${uniqueId}`);
+    uploadPhotoBtn.style.display = 'none';
+}
+
+      document.addEventListener('click', function (event) {
+            const target = event.target;
+
+            if (target && target.id.includes('start-camera-btn')) {
+                startCamera(target.id.replace('start-camera-btn', ''));
+            } else if (target && target.id.includes('take-photo-btn')) {
+                capturePhoto(target.id.replace('take-photo-btn', ''));
+            } else if (target && target.id.includes('delete-photo-btn')) {
+                deletePhoto(target.id.replace('delete-photo-btn', ''));
+            } else if (target && target.id.includes('upload-photo-btn')) {
+                uploadPhoto(target.id.replace('upload-photo-btn', ''));
+            }
+        });
+        
+// function validateEmail(email) {
+//     // Basic email regex pattern
+//     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+//     return emailPattern.test(email);
+// }
+// function validatePhoneNumber(phoneNumber) {
+//     // Basic phone number regex pattern (allows spaces, dashes, parentheses)
+//     const phonePattern = /^\+?[\d\s\-()]{7,}$/;
+//     return phonePattern.test(phoneNumber);
+// }
+
+
+</script>
+<script>
+    let currentPage = 0;
+    const questionsPerPage = 5;
+    let totalPages = 0;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const formTitle = localStorage.getItem('formTitle');
+        const formDescription = localStorage.getItem('formDescription');
+        const questions = JSON.parse(localStorage.getItem('questions'));
+
+        document.getElementById('preview-title').innerText = formTitle || "Untitled Form";
+        document.getElementById('preview-description').innerText = formDescription || "";
+
+        totalPages = Math.ceil(questions.length / questionsPerPage);
+        displayPage(currentPage, questions);
+        updateButtons();
+    });
+
+    function displayPage(page, questions) {
+        const previewQuestions = document.getElementById('preview-questions');
+        previewQuestions.innerHTML = '';
+
+        const start = page * questionsPerPage;
+        const end = start + questionsPerPage;
+        const questionsSubset = questions.slice(start, end);
+
+        questionsSubset.forEach((question) => {
+            const questionContainer = document.createElement('div');
+            questionContainer.classList.add('container', 'shadow', 'section-container');
+            questionContainer.style.marginTop = "20px";
+
+            const requiredIndicator = question.required ? '<span style="color: red;">*</span>' : '';
+
+            const sanitizedInputHtml = question.inputHtml.replace(/<i class="fas fa-times delete-icon".*?<\/i>/g, '');
+
+            questionContainer.innerHTML = `
+                <div class="question-header">${question.title} ${requiredIndicator}</div>
+                ${question.description ? `<div class="question-body">${question.description}</div>` : ''}
+                <div class="question-input">${sanitizedInputHtml}</div>
+            `;
+
+            previewQuestions.appendChild(questionContainer);
+        });
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            displayPage(currentPage, JSON.parse(localStorage.getItem('questions')));
+            updateButtons();
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            displayPage(currentPage, JSON.parse(localStorage.getItem('questions')));
+            updateButtons();
+        }
+    }
+
+    function updateButtons() {
+        document.getElementById('prev-button').style.display = currentPage === 0 ? 'none' : 'inline-block';
+        document.getElementById('next-button').style.display = currentPage === totalPages - 1 ? 'none' : 'inline-block';
+    }
+</script>
+</body>
+</html>
